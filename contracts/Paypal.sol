@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 contract Paypal {
     //Define the Owner of the smart contract
 
-    address public owner;
+    address private immutable owner;
 
     constructor() {
         owner = msg.sender;
@@ -32,9 +32,9 @@ contract Paypal {
         bool hasName;
     }
 
-    mapping(address => userName) names;
-    mapping(address => request[]) requests;
-    mapping(address => sendReceive[]) history;
+    mapping(address => userName) private names;
+    mapping(address => request[]) private requests;
+    mapping(address => sendReceive[]) private history;
 
     //Add a name to wallet address
 
@@ -151,5 +151,9 @@ contract Paypal {
 
     function getMyName(address _user) public view returns (userName memory) {
         return names[_user];
+    }
+
+    function getOwner() public view returns (address) {
+        return owner;
     }
 }
